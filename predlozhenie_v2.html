@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наш маленький договор 💍</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;font-family:Arial,sans-serif;overflow-x:hidden;background:linear-gradient(135deg,#ffd6e7,#fff1f7,#e9d5ff);color:#352437}
+.card{width:min(100%,560px);padding:clamp(24px,5vw,42px);text-align:center;background:rgba(255,255,255,.9);border:1px solid #ffffff;border-radius:28px;box-shadow:0 20px 60px rgba(120,50,100,.2);position:relative;z-index:1}
+h1{font-size:clamp(28px,6vw,42px);margin:8px 0 14px}p{font-size:18px;line-height:1.5;color:#665263}
+button{border:0;border-radius:999px;padding:14px 28px;margin:8px;font-size:17px;cursor:pointer;transition:transform .2s}
+button:hover{transform:scale(1.04)}#yes,.primary{background:#ff4f91;color:white}#no{background:#eee;color:#444}.hidden{display:none}.heart{font-size:68px;animation:pulse 1s infinite}
+@keyframes pulse{50%{transform:scale(1.12)}}
+label{display:block;text-align:left;margin:14px 0 6px;font-weight:bold}
+input{width:100%;padding:13px;border:1px solid #e5c6d7;border-radius:12px;font-size:16px;background:#fff}
+.contract{margin:22px 0;padding:20px;text-align:left;background:#fff8fc;border:1px dashed #e7a7c3;border-radius:18px;line-height:1.65}
+.signatures{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px}
+.sig{padding:12px 6px;border-bottom:1px solid #b78aa2;text-align:center;min-height:42px;font-family:cursive;font-size:19px;overflow-wrap:anywhere}
+.small{font-size:13px;color:#8a7184}.confetti{position:fixed;top:-30px;z-index:5;pointer-events:none;animation:fall 4s linear forwards}
+@keyframes fall{to{transform:translateY(115vh) rotate(760deg);opacity:.1}}
+</style>
+</head>
+<body>
+<section class="card" id="question">
+  <div class="heart">💍</div>
+  <h1>Ты выйдешь за меня?</h1>
+  <p>У меня к тебе один очень важный вопрос ❤️</p>
+  <button id="yes" onclick="showContract()">Да 💕</button>
+  <button id="no" onclick="nope()">Нет 😢</button>
+</section>
+
+<section class="card hidden" id="contractScreen">
+  <div class="heart">💖</div>
+  <h1>Ура! Это начало нашей истории!</h1>
+  <p>А теперь — наш шуточный договор о любви 💌</p>
+  <label for="herName">Имя невесты</label>
+  <input id="herName" placeholder="Впиши своё имя" maxlength="40">
+  <label for="myName">Имя жениха</label>
+  <input id="myName" placeholder="Впиши своё имя" maxlength="40">
+  <div class="contract">
+    <h3 style="text-align:center;margin-top:0">💍 ДОГОВОР О ЛЮБВИ 💍</h3>
+    Мы, нижеподписавшиеся, добровольно договариваемся:
+    <ol>
+      <li>Поддерживать друг друга и быть честными.</li>
+      <li>Обниматься только по взаимному желанию, чаще смеяться и беречь наши отношения.</li>
+      <li>Решать ссоры разговором, а не соревнованием «кто дольше молчит».</li>
+      <li>Создавать общие воспоминания и вместе выбирать дату нашей будущей свадьбы.</li>
+    </ol>
+    <p class="small">Это милый шуточный договор, а не юридический документ. Любые обещания — только по обоюдному желанию ❤️</p>
+  </div>
+  <button class="primary" onclick="signIt()">Подписать договор ✍️</button>
+</section>
+
+<section class="card hidden" id="finalScreen">
+  <div class="heart">💍❤️</div>
+  <h1>ДОГОВОР ПОДПИСАН!</h1>
+  <p>С этого дня у нас есть ещё одна милая причина улыбаться друг другу 🥹</p>
+  <div class="contract">
+    <h3 style="text-align:center;margin-top:0">Свидетельство о нашем обещании</h3>
+    <p>Мы, <b id="signedHer">Невеста</b> и <b id="signedMe">Жених</b>, подписали этот маленький договор любви.</p>
+    <div class="signatures">
+      <div><div class="sig" id="herSig"></div><div class="small">Подпись невесты</div></div>
+      <div><div class="sig" id="mySig"></div><div class="small">Подпись жениха</div></div>
+    </div>
+    <p style="text-align:center;margin-bottom:0">Дата: <b id="date"></b></p>
+  </div>
+  <h2>УРААА! 🎉💒</h2>
+  <p>Пусть впереди будет много счастливых моментов вместе! ❤️</p>
+  <button class="primary" onclick="celebrate()">Ещё конфетти! 🎊</button>
+</section>
+<script>
+function showContract(){
+ document.getElementById('question').classList.add('hidden');
+ document.getElementById('contractScreen').classList.remove('hidden');
+}
+function nope(){
+ const b=document.getElementById('no');
+ b.textContent='Может, подумаешь ещё? 🥺';
+ b.style.transform=`translate(${Math.random()*70-35}px,${Math.random()*35-17}px)`;
+}
+function signIt(){
+ const her=document.getElementById('herName').value.trim()||'Моя любимая';
+ const me=document.getElementById('myName').value.trim()||'Твой любимый';
+ document.getElementById('signedHer').textContent=her;
+ document.getElementById('signedMe').textContent=me;
+ document.getElementById('herSig').textContent=her;
+ document.getElementById('mySig').textContent=me;
+ document.getElementById('date').textContent=new Date().toLocaleDateString('ru-RU');
+ document.getElementById('contractScreen').classList.add('hidden');
+ document.getElementById('finalScreen').classList.remove('hidden');
+ celebrate();
+}
+function celebrate(){
+ const icons=['💖','💍','❤️','✨','🎉','💕','💐'];
+ for(let i=0;i<100;i++){
+  const x=document.createElement('div');x.className='confetti';
+  x.textContent=icons[Math.floor(Math.random()*icons.length)];
+  x.style.left=Math.random()*100+'vw';
+  x.style.fontSize=(16+Math.random()*22)+'px';
+  x.style.animationDelay=Math.random()*1.8+'s';
+  x.style.animationDuration=(3+Math.random()*2)+'s';
+  document.body.appendChild(x);
+  setTimeout(()=>x.remove(),6000);
+ }
+}
+</script>
+</body>
+</html>
